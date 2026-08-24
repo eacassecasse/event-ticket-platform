@@ -1,0 +1,38 @@
+name: Continuous Deployment
+
+on:
+  push:
+    branches:
+      - main
+
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: production-deployment
+  cancel-in-progress: false
+
+jobs:
+  deployment-readiness:
+    name: Deployment Readiness
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Validate production configuration
+        run: |
+          test -f README.md
+          test -d apps/server
+          # test -d apps/client/web
+          # test -d infrastructure
+          # test -d infrastructure/docker
+          # test -d infrastructure/compose
+
+      - name: Deployment status
+        run: |
+          echo "Production deployment infrastructure is not yet configured."
+          echo "This workflow will be extended when the hosting targets are established."

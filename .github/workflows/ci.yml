@@ -1,0 +1,85 @@
+name: Continuous Integration Pipeline
+
+on:
+  pull_request:
+    branches:
+      - develop
+      - main
+
+  push:
+    branches:
+      - develop
+      - main
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  repository:
+    name: Repository
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Validate repository structure
+        run: |
+          test -f README.md
+          test -f CONTRIBUTING.md
+          test -f commitlint.config.js
+          test -d .github/workflows
+          test -d docs
+          test -d specs
+
+  commitlint:
+    name: Commitlint
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: Setup pnpm cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.local/share/pnpm/store
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-
+
+      - name: Install repository tooling
+        run: pnpm install --frozen-lockfile
+
+      - name: Validate pull request commits
+        if: github.event_name == 'pull_request'
+        run: |
+          pnpm exec commitlint \
+            --from="${{ github.event.pull_request.base.sha }}" \
+            --to="${{ github.event.pull_request.head.sha }}" \
+            --verbose
+
+      - name: Validate latest commit
+        if: github.event_name == 'push' && github.event.before != '0000000000000000000000000000000000000000'
+        run: |
+          pnpm exec commitlint \
+            --from="${{ github.event.before }}" \
+            --to="${{ github.sha }}" \
+            --verbose
