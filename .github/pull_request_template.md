@@ -1,140 +1,121 @@
-## Descrição
+## Description
 
-Descreva de forma clara o que foi alterado e qual problema ou necessidade está a ser resolvido.
+Clearly describe what was changed and what problem or need is being addressed.
 
-## Tipo de alteração
+## Type of Change
 
-- [ ] Nova funcionalidade
-- [ ] Correcção de erro
-- [ ] Refactorização
-- [ ] Testes
-- [ ] Documentação
-- [ ] Infraestrutura
-- [ ] CI/CD
-- [ ] Segurança
-- [ ] Outra
+* [ ] New feature
+* [ ] Bug fix
+* [ ] Refactoring
+* [ ] Tests
+* [ ] Documentation
+* [ ] Infrastructure
+* [ ] CI/CD
+* [ ] Security
+* [ ] Other
 
-## Alterações principais
+## Main Changes
 
-Liste as alterações mais relevantes introduzidas nesta Pull Request.
+List the most relevant changes introduced in this Pull Request.
 
-- 
-- 
-- 
+*
+*
+*
 
-## Relação com Issue ou requisito
+## Related Issue or Requirement
 
-Indique a Issue, especificação ou requisito relacionado, quando aplicável.
+Indicate the related Issue, specification, or requirement, when applicable.
 
-Exemplo:
+Example:
 
 ```text
 Closes #123
-````
+```
 
-## Validação
+## Validation
 
-Indique os comandos, testes ou procedimentos utilizados para verificar a alteração.
+Indicate the commands, tests, or procedures used to verify the change.
 
 ```bash
-# Exemplos
+# Examples
 pnpm lint
 pnpm test
 ```
 
-Para alterações específicas, descreva também a validação manual realizada.
+For specific changes, also describe any manual validation performed.
 
-## Testes
+## Tests
 
-* [ ] Foram adicionados novos testes.
-* [ ] Foram actualizados testes existentes.
-* [ ] Os testes existentes foram executados.
-* [ ] Não foram necessários novos testes.
-* [ ] Foi realizada validação manual quando aplicável.
+* [ ] New tests were added.
+* [ ] Existing tests were updated.
+* [ ] Existing tests were executed.
+* [ ] No new tests were required.
+* [ ] Manual validation was performed where applicable.
 
-## Documentação
+## Documentation
 
-* [ ] A documentação foi actualizada.
-* [ ] A alteração não requer actualização da documentação.
-* [ ] A documentação será actualizada numa alteração relacionada.
+* [ ] Documentation was updated.
+* [ ] The change does not require documentation updates.
+* [ ] Documentation will be updated in a related change.
 
-## Base de dados
+## Database
 
-* [ ] Não existem alterações à base de dados.
-* [ ] Foram criadas/actualizadas migrações.
-* [ ] Foram actualizados os dados de teste/seeding.
-* [ ] As alterações foram validadas localmente.
+* [ ] No database changes were made.
+* [ ] Migrations were created/updated.
+* [ ] Test data/seeding was updated.
+* [ ] Changes were validated locally.
 
-## Segurança
+## Security
 
-* [ ] Não foram introduzidos segredos, credenciais ou API keys.
-* [ ] Foram consideradas as implicações de autenticação.
-* [ ] Foram consideradas as implicações de autorização.
-* [ ] Foram consideradas as implicações de validação de dados.
-* [ ] Não foram expostos dados sensíveis.
-* [ ] Não aplicável.
+* [ ] No secrets, credentials, or API keys were introduced.
+* [ ] Authentication implications were considered.
+* [ ] Authorization implications were considered.
+* [ ] Data validation implications were considered.
+* [ ] No sensitive data was exposed.
+* [ ] Not applicable.
 
-## Compatibilidade
+## Compatibility
 
-* [ ] A alteração mantém compatibilidade com o comportamento existente.
-* [ ] A alteração introduz uma mudança de comportamento documentada.
-* [ ] A alteração requer actualização de outros componentes.
-* [ ] Não aplicável.
+* [ ] The change maintains compatibility with existing behavior.
+* [ ] The change introduces a documented behavior change.
+* [ ] The change requires updates to other components.
+* [ ] Not applicable.
 
-## Checklist do autor
+## Author Checklist
 
-* [ ] A branch foi criada a partir da branch correcta.
-* [ ] A Pull Request possui um âmbito claramente definido.
-* [ ] O código segue os padrões definidos no projecto.
-* [ ] O lint passa sem erros.
-* [ ] Os testes aplicáveis passam.
-* [ ] Não existem ficheiros ou alterações desnecessárias.
-* [ ] Não existem segredos ou credenciais no código.
-* [ ] A documentação necessária foi actualizada.
-* [ ] As mensagens de commit seguem Conventional Commits.
-* [ ] As limitações conhecidas estão documentadas.
-* [ ] A alteração foi revista pelo próprio autor antes da submissão.
+* [ ] The branch was created from the correct branch.
+* [ ] The Pull Request has a clearly defined scope.
+* [ ] The code follows the project's defined standards.
+* [ ] Lint passes without errors.
+* [ ] Applicable tests pass.
+* [ ] There are no unnecessary files or changes.
+* [ ] There are no secrets or credentials in the code.
+* [ ] Required documentation has been updated.
+* [ ] Commit messages follow Conventional Commits.
+* [ ] Known limitations are documented.
+* [ ] The change was self-reviewed before submission.
 
-## Limitações conhecidas
+## Known Limitations
 
-Descreva limitações, dívida técnica, funcionalidades não implementadas ou comportamentos conhecidos que possam ser relevantes para a revisão.
+Describe limitations, technical debt, unimplemented functionality, or known behaviors that may be relevant to the review.
 
-Se não existirem:
+If there are none:
 
 ```text
-Nenhuma limitação conhecida.
+No known limitations.
 ```
 
-## Notas para revisão
+## Review Notes
 
-Indique áreas específicas que mereçam atenção durante a revisão.
+Indicate specific areas that deserve attention during the review.
 
-Por exemplo:
 
-* decisões arquitecturais;
-* regras de negócio;
-* concorrência;
-* segurança;
-* tratamento de erros;
-* alterações de base de dados;
-* integração com serviços externos.
+For example:
 
-```text
-Nenhuma nota adicional.
-```
-
-````
-
-### Recommended final location
-
-Your repository should now have:
-
-```text
-.github/
-├── ISSUE_TEMPLATE/
-│   ├── bug_report.md
-│   └── feature_request.md
-└── pull_request_template.md
-````
-
-This version is intentionally more detailed than a generic GitHub template because the challenge explicitly evaluates **how you think, document decisions, validate the implementation, and communicate technical trade-offs**, not merely whether the application runs.
+* architectural decisions;
+* business rules;
+* concurrency;
+* security;
+* error treatment;
+* database updates;
+* external services integration.
