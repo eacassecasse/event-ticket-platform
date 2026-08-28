@@ -1,8 +1,7 @@
-#!/usr/bin/python3
-
 from datetime import datetime, timezone
 from decimal import Decimal
 
+from pwdlib import PasswordHash
 from sqlalchemy import select
 
 from app.database.session import SessionLocal
@@ -13,8 +12,6 @@ from app.models import (
     User,
     UserRole,
 )
-from pwdlib import PasswordHash
-
 
 password_hash = PasswordHash.recommended()
 

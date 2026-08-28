@@ -1,6 +1,6 @@
 from typing import Annotated
 
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
@@ -14,7 +14,6 @@ from app.models import (
     UserRole,
 )
 from app.schemas.event import EventCreate, EventResponse
-
 
 router = APIRouter(
     prefix="/events",

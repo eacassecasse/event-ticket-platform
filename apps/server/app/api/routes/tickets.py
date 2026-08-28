@@ -1,12 +1,9 @@
+from datetime import datetime, timezone
 from typing import Annotated
 
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy import select
 from sqlalchemy.orm import Session
-
-from datetime import datetime, timezone
-
-from fastapi import HTTPException
 
 from app.api.dependencies import require_role
 from app.database.session import get_db
@@ -22,7 +19,6 @@ from app.schemas.ticket import (
     TicketValidationResponse,
 )
 from app.services.ticket import create_ticket
-
 
 router = APIRouter(
     prefix="/tickets",

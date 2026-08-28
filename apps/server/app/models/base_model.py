@@ -1,12 +1,13 @@
-#!/usr/bin/python3
 """
 Contains class BaseModel
 """
 
 import uuid
-from datetime import datetime, UTC
-from sqlalchemy import func, String, DateTime
-from sqlalchemy.orm import declared_attr, declarative_mixin, Mapped, mapped_column
+from datetime import datetime
+
+from sqlalchemy import DateTime, String, func
+from sqlalchemy.orm import Mapped, declarative_mixin, declared_attr, mapped_column
+
 
 @declarative_mixin
 class BaseModel:

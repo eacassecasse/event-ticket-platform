@@ -11,8 +11,8 @@ from sqlalchemy import (
 )
 from sqlalchemy.orm import Mapped, mapped_column
 
-from app.models.base_model import BaseModel
 from app.database.base import Base
+from app.models.base_model import BaseModel
 
 
 class EventStatus(StrEnum):
@@ -34,7 +34,7 @@ class Event(BaseModel, Base):
 
     external_catalog_item_id: Mapped[str] = mapped_column(
         ForeignKey("external_catalog_items.id"),
-        nullable=False,
+        nullable=True,
         index=True,
     )
 

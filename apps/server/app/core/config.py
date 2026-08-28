@@ -1,8 +1,5 @@
-#!/usr/bin/python3
-
-import secrets
-from typing import List
 from functools import lru_cache
+
 from pydantic import field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
@@ -40,7 +37,7 @@ class Settings(BaseSettings):
     DEBUG: bool = False
 
     # CORS
-    CORS_ORIGIN: List[str] = ["http://localhost:5173"]
+    CORS_ORIGIN: list[str] = ["http://localhost:5173"]
 
     # CATALOG
     TICKETMASTER_API_KEY:str | None = None
@@ -49,14 +46,22 @@ class Settings(BaseSettings):
     # Validation for production
     @field_validator("DATABASE_URL")
     def validate_database_url(cls, v, values):
-        if values.data.get("ENVIRONMENT") == "production" and "localhost" in v:
+        if values.data.get("APP_ENV") == "production" and "localhost" in v:
             raise ValueError("A URL da base de dados em produção não pode usar localhost")
         return v
 
     @field_validator("SECRET_KEY")
     def validate_secret_key(cls, v, values):
-        if values.data.get("APP_ENV") == "production" and v == "changeme":
+        if values.data.get("APP_ENV") == "production" and (not v or v == "changeme"):
             raise ValueError("Deve atribuir o SECRET_KEY em ambiente de produção")
+        return v
+
+    @field_validator("JWT_SECRET_KEY")
+    def validate_jwt_secret_key(cls, v, values):
+        if not v:
+            raise ValueError("JWT_SECRET_KEY é obrigatório para assinar tokens")
+        if values.data.get("APP_ENV") == "production" and len(v) < 32:
+            raise ValueError("JWT_SECRET_KEY deve ter pelo menos 32 caracteres em produção")
         return v
 
     @field_validator("CORS_ORIGIN", mode="before")

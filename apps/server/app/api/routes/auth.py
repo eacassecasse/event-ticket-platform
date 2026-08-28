@@ -9,7 +9,6 @@ from app.database.session import get_db
 from app.models import User
 from app.schemas.auth import LoginRequest, LoginResponse
 
-
 router = APIRouter(
     prefix="/auth",
     tags=["Authentication"],

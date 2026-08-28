@@ -27,4 +27,4 @@ class TicketValidationResponse(BaseModel):
     valid: bool
     status: str
     message: str
-    ticket_id: int | None = None
+    ticket_id: str | None = None

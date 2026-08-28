@@ -1,0 +1,145 @@
+@baseUrl = http://localhost:8000
+@apiUrl = {{baseUrl}}/api/v1
+@contentType = application/json
+
+# Credenciais criadas pelo seed da aplicação.
+@demoPassword = Password123!
+
+# Os valores seguintes são preenchidos automaticamente pelos pedidos de login.
+@organizerToken = {{loginOrganizer.response.body.$.access_token}}
+@customerToken = {{loginCustomer.response.body.$.access_token}}
+@gateToken = {{loginGate.response.body.$.access_token}}
+
+# IDs obtidos a partir das respostas do fluxo de demonstração.
+@catalogEventId = {{getCatalogEvent.response.body.$.external_id}}
+@eventId = {{createEvent.response.body.$.id}}
+@reservationId = {{createReservation.response.body.$.id}}
+@ticketCode = {{issueTicket.response.body.$.code}}
+
+### Verificar disponibilidade da API
+GET {{baseUrl}}/health
+
+### Autenticar como organizador
+# @name loginOrganizer
+POST {{apiUrl}}/auth/login
+Content-Type: {{contentType}}
+
+{
+  "email": "organizer@elitedev.com.br",
+  "password": "{{demoPassword}}"
+}
+
+### Autenticar como cliente
+# @name loginCustomer
+POST {{apiUrl}}/auth/login
+Content-Type: {{contentType}}
+
+{
+  "email": "customer1@elitedev.com.br",
+  "password": "{{demoPassword}}"
+}
+
+### Autenticar como operador de entradas
+# @name loginGate
+POST {{apiUrl}}/auth/login
+Content-Type: {{contentType}}
+
+{
+  "email": "gate@elitedev.com.br",
+  "password": "{{demoPassword}}"
+}
+
+### Pesquisar eventos no catálogo externo
+# Requer TICKETMASTER_API_KEY configurada no backend.
+# @name searchCatalog
+GET {{apiUrl}}/catalog/events?keyword=music&size=5
+Authorization: Bearer {{organizerToken}}
+
+### Obter evento específico do catálogo externo
+# Substitua o ID abaixo por um external_id retornado pela pesquisa acima.
+#
+# Exemplo:
+# GET /catalog/events/G5vZ2ZKS5pr1qy
+#
+# @name getCatalogEvent
+GET {{apiUrl}}/catalog/events/{{catalogEventId}}
+Authorization: Bearer {{organizerToken}}
+
+### Criar evento como organizador
+# O catalog_external_id deve corresponder a um evento real
+# obtido através do catálogo externo.
+# @name createEvent
+POST {{apiUrl}}/events
+Authorization: Bearer {{organizerToken}}
+Content-Type: {{contentType}}
+
+{
+  "catalog_external_id": "{{catalogEventId}}",
+  "title": "Evento de demonstração HTTP",
+  "description": "Evento criado através do cliente HTTP.",
+  "event_date": "2026-12-15T20:00:00Z",
+  "location": "Lisboa",
+  "capacity": 100,
+  "price": 25.00
+}
+
+### Listar eventos publicados
+GET {{apiUrl}}/events
+
+### Criar reserva como cliente
+# @name createReservation
+POST {{apiUrl}}/reservations
+Authorization: Bearer {{customerToken}}
+Content-Type: {{contentType}}
+
+{
+  "event_id": "{{eventId}}",
+  "quantity": 2
+}
+
+### Processar pagamento aprovado
+# @name createPayment
+POST {{apiUrl}}/payments
+Authorization: Bearer {{customerToken}}
+Content-Type: {{contentType}}
+
+{
+  "reservation_id": "{{reservationId}}",
+  "approve": true
+}
+
+### Emitir ingresso para a reserva paga
+# @name issueTicket
+POST {{apiUrl}}/tickets?reservation_id={{reservationId}}
+Authorization: Bearer {{customerToken}}
+
+### Listar os meus ingressos
+GET {{apiUrl}}/tickets/me
+Authorization: Bearer {{customerToken}}
+
+### Validar ingresso como operador de entradas
+POST {{apiUrl}}/tickets/validate
+Authorization: Bearer {{gateToken}}
+Content-Type: {{contentType}}
+
+{
+  "code": "{{ticketCode}}",
+  "event_id": "{{eventId}}"
+}
+
+### Consultar ingresso partilhado, sem autenticação
+GET {{apiUrl}}/tickets/share/{{ticketCode}}
+
+### Teste de autorização: cliente não pode criar eventos
+POST {{apiUrl}}/events
+Authorization: Bearer {{customerToken}}
+Content-Type: {{contentType}}
+
+{
+  "catalog_external_id": "forbidden-event",
+  "title": "Pedido não autorizado",
+  "event_date": "2026-12-20T20:00:00Z",
+  "location": "Lisboa",
+  "capacity": 10,
+  "price": 10.00
+}

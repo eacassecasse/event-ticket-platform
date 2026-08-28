@@ -12,7 +12,6 @@ from app.schemas.reservation import (
 )
 from app.services.reservation import create_reservation
 
-
 router = APIRouter(
     prefix="/reservations",
     tags=["Reservations"],

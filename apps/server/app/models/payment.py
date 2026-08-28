@@ -1,14 +1,12 @@
-#!/usr/bin/python3
-
 from datetime import datetime
 from decimal import Decimal
 from enum import StrEnum
 
-from sqlalchemy import DateTime, ForeignKey, Numeric, String, func
+from sqlalchemy import DateTime, ForeignKey, Numeric, String
 from sqlalchemy.orm import Mapped, mapped_column
 
-from app.models.base_model import BaseModel
 from app.database.base import Base
+from app.models.base_model import BaseModel
 
 
 class PaymentStatus(StrEnum):

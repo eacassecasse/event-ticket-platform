@@ -10,8 +10,8 @@ class ReservationCreate(BaseModel):
 
 class ReservationResponse(BaseModel):
     id: str
-    event_id: int
-    customer_id: int
+    event_id: str
+    customer_id: str
     quantity: int
     unit_price: Decimal
     total_amount: Decimal

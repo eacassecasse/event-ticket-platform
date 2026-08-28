@@ -1,14 +1,11 @@
-#!/usr/bin/python3
-
-
 from decimal import Decimal
 from enum import StrEnum
 
 from sqlalchemy import ForeignKey, Numeric
 from sqlalchemy.orm import Mapped, mapped_column
 
-from app.models.base_model import BaseModel
 from app.database.base import Base
+from app.models.base_model import BaseModel
 
 
 class ReservationStatus(StrEnum):

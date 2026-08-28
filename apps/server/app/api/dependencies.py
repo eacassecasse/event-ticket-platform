@@ -1,7 +1,8 @@
 from typing import Annotated
 
 import jwt
-from fastapi import Depends, HTTPException, status
+import httpx
+from fastapi import Depends, HTTPException, status, Request
 from fastapi.security import OAuth2PasswordBearer
 from sqlalchemy import select
 from sqlalchemy.orm import Session
@@ -9,7 +10,6 @@ from sqlalchemy.orm import Session
 from app.core.security import decode_access_token
 from app.database.session import get_db
 from app.models import User, UserRole
-
 
 oauth2_scheme = OAuth2PasswordBearer(
     tokenUrl="/api/v1/auth/login",
@@ -34,8 +34,6 @@ def get_current_user(
 
         if user_id is None:
             raise credentials_exception
-
-        user_id = int(user_id)
 
     except (jwt.InvalidTokenError, ValueError):
         raise credentials_exception
@@ -68,3 +66,7 @@ def require_role(*roles: UserRole):
         return current_user
 
     return role_checker
+
+def get_http_client(request: Request) -> httpx.AsyncClient:
+    """Provide an HTTP client for making external requests."""
+    return request.app.state.http_client
